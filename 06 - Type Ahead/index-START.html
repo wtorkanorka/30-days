@@ -14,9 +14,48 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
-
-</script>
+  <script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+    
+     ( async () => {
+       const response = await fetch(endpoint) 
+       const cities = await response.json()
+    
+       const ul = document.querySelector('ul') 
+       const input = document.querySelector('input')
+    
+       input.addEventListener('input', event => {
+         const { value } = event.target
+         const filteredcities = cities.filter(item => {
+          return item.city.toLowerCase().includes(value.toLowerCase()) || item.state.toLowerCase().includes(value.toLowerCase())
+         }) 
+        //  const filteredstates = cities.filter(item => {
+        //    return item.state.toLowerCase().includes(value.toLowerCase())
+        //  }
+        //  )
+    
+          function test(x){
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+    
+          // console.log(filteredcities.map(place => {
+          //   return place.city
+          // }))
+          ul.innerHTML = filteredcities.map(place => {
+            const city = place.city.replace(value, `<span class="hl">${value}</span>`);
+            const state = place.state.replace(value, `<span class="hl">${value}</span>`);
+            return `<li>
+              <span>${city}, ${state}</span>
+              <span class = "population">${test(place.population)}</span>
+              </li>`
+          }).join('')
+    
+       })
+    
+    
+    
+     })()
+    
+    </script>
 </body>
 </html>
