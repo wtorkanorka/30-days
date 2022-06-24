@@ -113,6 +113,10 @@
         goDown = 300;
         setDifficulpText.textContent = `Hard`;
       }
+      function clickOnmole(){
+         scoreBoard.textContent++;
+       
+      }
       function startGame() {
         game.style.display = 'flex';
         if (goDown === 0) {
@@ -123,14 +127,14 @@
         buttonStart.style.display = "none";
         scoreBoard.textContent = 0;
         clearInterval(timer);
-        moles.forEach((e) => {
-          e.addEventListener("click", (e)=>{
-            scoreBoard.textContent = parseInt(scoreBoard.textContent) + 1;
-        if(e.target.parentElement.classList.contains('up')){
-            e.target.parentElement.classList.remove('up')
+        moles.forEach((event) => {
+          event.addEventListener("click", clickOnmole);
+           event.addEventListener('click', (e)=>{
+            if(event.parentElement.classList.contains('up')){
+            event.parentElement.classList.remove('up')
           }
-          });
           
+           })
         });
 
 
