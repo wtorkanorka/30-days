@@ -14,17 +14,12 @@
     <div>
       <h1>Whack-a-mole! <span class="score">0</span></h1>
       <div>
-        <button
-          onClick="startGame()"
-          class="buttonStartGame"
-        >
-          Start!
-        </button>
+        <button onClick="startGame()" class="buttonStartGame">Start!</button>
         <div class="setDifficulpDiv">
           <p class="setDifficulpText"></p>
         </div>
       </div>
-  
+
       <div class="difficultPosition">
         <button
           onclick="setEasyDifficult()"
@@ -44,9 +39,7 @@
         >
           Hard
         </button>
-        
       </div>
-      
     </div>
 
     <div class="game">
@@ -69,18 +62,16 @@
         <div class="mole"></div>
       </div>
     </div>
-   
-   
+    <div class="coords"></div>
     <script>
       const holes = Array.from(document.querySelectorAll(".hole"));
       const scoreBoard = document.querySelector(".score");
       const moles = [...document.querySelectorAll(".mole")];
       const buttonStart = document.querySelector("button");
       const buttons = document.querySelector(".difficultPosition");
-      const game = document.querySelector('.game')
-      const setDifficulpText = document.querySelector('.setDifficulpText')
-    
-
+      const game = document.querySelector(".game");
+      const setDifficulpText = document.querySelector(".setDifficulpText");
+      const oval = document.querySelector(".coords");
       function getRandomInt(min, max) {
         // Рандомное число, для обозначения норок
         min = Math.ceil(min);
@@ -91,9 +82,7 @@
       let timer;
       let goDown = 0;
 
-      game.style.display = 'none';
-
-      
+      game.style.display = "none";
 
       // function clickOneMole() {
       //   scoreBoard.textContent = parseInt(scoreBoard.textContent) + 1;
@@ -113,36 +102,32 @@
         goDown = 300;
         setDifficulpText.textContent = `Hard`;
       }
-      function clickOnmole(){
-         scoreBoard.textContent++;
-       
+      function clickOnmole() {
+        scoreBoard.textContent++;
       }
       function startGame() {
-        game.style.display = 'flex';
+        game.style.display = "flex";
         if (goDown === 0) {
           alert("Перезагрузи страницу и выбери сложность");
         }
-       
+
         buttons.style.display = "none";
         buttonStart.style.display = "none";
         scoreBoard.textContent = 0;
         clearInterval(timer);
         moles.forEach((event) => {
           event.addEventListener("click", clickOnmole);
-           event.addEventListener('click', (e)=>{
-            if(event.parentElement.classList.contains('up')){
-            event.parentElement.classList.remove('up')
-          }
-          
-           })
+          event.addEventListener("click", (e) => {
+            if (event.parentElement.classList.contains("up")) {
+              event.parentElement.classList.remove("up");
+            }
+          });
         });
-
-
 
         timer = setInterval(() => {
           const moleIndex = getRandomInt(0, holes.length - 1);
           holes[moleIndex].classList.add("up");
-          
+
           setTimeout(() => {
             holes[moleIndex].classList.remove("up");
           }, goDown);
@@ -152,9 +137,25 @@
           clearInterval(timer);
           buttonStart.style.display = "initial";
           buttons.style.display = "flex";
-          game.style.display = 'none';
+          game.style.display = "none";
         }, getRandomInt(10000, 20000));
       }
+      let color = 0;
+      function getCursorPosition() {
+        window.addEventListener("click", (event) => {
+          let x = event.pageX;
+          let y = event.pageY;
+
+          oval.style.top = y + "px";
+          oval.style.left = x + "px";
+
+          setInterval(function () {
+            color = color + (1 % 360);
+            oval.style.backgroundColor = "hsl(" + color + ", 100%, 50%)"; // hsl(0, 100%, 50%)
+          }, 50);
+        });
+      }
+      getCursorPosition();
     </script>
   </body>
 </html>

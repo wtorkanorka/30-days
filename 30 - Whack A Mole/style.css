@@ -126,3 +126,12 @@ h1 {
   
   
 }
+
+.coords {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+ 
+  transition: 0.1s ease-in;
+position: absolute;
+}
