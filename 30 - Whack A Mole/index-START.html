@@ -140,7 +140,14 @@
           game.style.display = "none";
         }, getRandomInt(10000, 20000));
       }
+
+      
       let color = 0;
+      setInterval(function () { //изменение цвета курсора
+            color = color + (1 % 360);
+            oval.style.backgroundColor = "hsl(" + color + ", 100%, 50%)"; // hsl(0, 100%, 50%)
+          }, 50);
+
       function getCursorPosition() {
         window.addEventListener("click", (event) => {
           let x = event.pageX;
@@ -149,12 +156,10 @@
           oval.style.top = y + "px";
           oval.style.left = x + "px";
 
-          setInterval(function () {
-            color = color + (1 % 360);
-            oval.style.backgroundColor = "hsl(" + color + ", 100%, 50%)"; // hsl(0, 100%, 50%)
-          }, 50);
+          
         });
       }
+      
       getCursorPosition();
     </script>
   </body>
